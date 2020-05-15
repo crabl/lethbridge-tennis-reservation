@@ -6,26 +6,41 @@ const TODAY = moment().startOf('day');
 @Component({
   selector: 'app-date-picker',
   template: `
-    <div class="btn-group">
-      <button class="btn btn-outline-primary" [disabled]="!allow_previous" (click)="previousDate()">
-        &laquo;
-      </button>
-      <button class="btn btn-outline-primary">
-        {{ selectedDate | date }}
-      </button>
-      <button class="btn btn-outline-primary" [disabled]="!allow_next" (click)="nextDate()">
-        &raquo;
-      </button>
+    <div class="content">
+      <div class="box">
+        <div class="card--date" *ngFor="let date of dates">
+          {{date | date:'E'}}
+          {{date | date:'LLL'}}
+          {{date | date:'dd'}}
+        </div>
+      </div>
     </div>
   `,
-  styles: [
-  ]
+  styles: [`
+    .content {
+      flex: 1;
+      display: flex;
+      overflow: auto;
+    }
+
+    .box {
+      display: flex;
+      min-height: min-content; /* needs vendor prefixes */
+    }
+
+    .card--date {
+      width: 100px !important;
+    }
+  `]
 })
 export class DatePickerComponent implements OnInit {
   @Input() selectedDate: moment.Moment = moment(TODAY);
   @Output() selectedDateChange = new EventEmitter<moment.Moment>();
 
   @Input() maxDate: moment.Moment = moment(TODAY).add(7, 'days');
+
+  dates: moment.Moment[] = []
+
 
   allow_previous: boolean = true;
   allow_next: boolean = true;
@@ -35,6 +50,16 @@ export class DatePickerComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
+    this.dates = [
+      moment(TODAY).add(0, 'days'),
+      moment(TODAY).add(1, 'days'),
+      moment(TODAY).add(2, 'days'),
+      moment(TODAY).add(3, 'days'),
+      moment(TODAY).add(4, 'days'),
+      moment(TODAY).add(5, 'days'),
+      moment(TODAY).add(6, 'days'),
+      moment(TODAY).add(7, 'days')
+    ]
   }
 
   ngOnChanges() {
