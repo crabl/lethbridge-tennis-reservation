@@ -15,7 +15,8 @@ export class AppComponent {
   title = 'lethbridge-tennis-reservation';
   reservations$: Observable<PublicReservation[]>;
 
-  constructor(private ReserveService: ReservationService) {
-    this.reservations$ = this.ReserveService.getReservations();
+  constructor(private ReservationService: ReservationService) {
+    this.reservations$ = this.ReservationService.reservations$;
+    this.ReservationService.getReservations();
   }
 }
