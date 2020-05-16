@@ -8,12 +8,14 @@ import { ReserveTableComponent } from './reserve-table/reserve-table.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { DatePickerComponent } from './date-picker/date-picker.component';
 import { ReservationService } from './reservation.service';
+import { ReserveModalComponent } from './reserve-modal/reserve-modal.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     ReserveTableComponent,
-    DatePickerComponent
+    DatePickerComponent,
+    ReserveModalComponent
   ],
   imports: [
     BrowserModule,

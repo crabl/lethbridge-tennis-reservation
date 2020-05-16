@@ -1,9 +1,8 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { NgbDatepickerI18n } from '@ng-bootstrap/ng-bootstrap';
+import { NgbDatepickerI18n, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import * as moment from 'moment';
 import { PublicReservation } from '../reservations/public-reservation.model';
-import { ReservationService } from '../reservation.service';
-import { PrivateReservation } from '../reservations/private-reservation.model';
+import { ReserveModalComponent } from '../reserve-modal/reserve-modal.component';
 
 enum TimeslotStatus {
   Booked = 'booked',
@@ -106,7 +105,7 @@ export class ReserveTableComponent implements OnInit {
 
   courts = ['#1', '#2', '#3', '#4', '#5', '#6'];
 
-  constructor(public i18n: NgbDatepickerI18n, private ReservationService: ReservationService) { }
+  constructor(public i18n: NgbDatepickerI18n, private NgbModal: NgbModal) { }
 
   ngOnInit(): void {
   }
@@ -146,16 +145,10 @@ export class ReserveTableComponent implements OnInit {
   }
 
   reserve(selected_date, selected_court_index, slot: Timeslot) {
-    this.ReservationService.createReservation(new PrivateReservation({
-      date: selected_date,
-      court: this.courts[selected_court_index],
-      timeslot: slot.timeslot,
-      booked_by: {
-        first_name: 'Kevin',
-        last_name: 'McKillop',
-        email: 'kbm@kbmonline.uni.cc'
-      }
-    })).then(xs => console.log(xs), (err) => console.error(err));
+    const modal_ref = this.NgbModal.open(ReserveModalComponent);
+    modal_ref.componentInstance.date = selected_date;
+    modal_ref.componentInstance.court = this.courts[selected_court_index];
+    modal_ref.componentInstance.timeslot = slot.timeslot;
   }
 
   isAvailable(selected_date, selected_court_index, timeslot) {

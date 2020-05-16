@@ -33,7 +33,7 @@ export class ReservationService {
       return reservation;
     } catch (err) {
       this.getReservations();
-      throw err;
+      throw err.error ? err.error.error : 'We ran into an issue creating your booking. Please try again later.';
     }
   }
 }
