@@ -1,17 +1,17 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import * as moment from 'moment';
 
-const TODAY = moment().startOf('day');
+const TODAY = moment().utc().startOf('day');
 
 @Component({
   selector: 'app-date-picker',
   template: `
     <div class="content">
       <div class="box">
-        <div class="card--date" *ngFor="let date of dates">
-          {{date | date:'E'}}
-          {{date | date:'LLL'}}
-          {{date | date:'dd'}}
+        <div class="card--date" *ngFor="let date of dates" (click)="pickDate(date)">
+          {{date | date:'E':'UTC' }}
+          {{date | date:'LLL':'UTC' }}
+          {{date | date:'dd':'UTC' }}
         </div>
       </div>
     </div>
@@ -34,10 +34,10 @@ const TODAY = moment().startOf('day');
   `]
 })
 export class DatePickerComponent implements OnInit {
-  @Input() selectedDate: moment.Moment = moment(TODAY);
+  @Input() selectedDate: moment.Moment = moment(TODAY).utc().startOf('day');
   @Output() selectedDateChange = new EventEmitter<moment.Moment>();
 
-  @Input() maxDate: moment.Moment = moment(TODAY).add(7, 'days');
+  @Input() maxDate: moment.Moment = moment(TODAY).utc().startOf('day').add(7, 'days');
 
   dates: moment.Moment[] = []
 
@@ -51,14 +51,14 @@ export class DatePickerComponent implements OnInit {
 
   ngOnInit(): void {
     this.dates = [
-      moment(TODAY).add(0, 'days'),
-      moment(TODAY).add(1, 'days'),
-      moment(TODAY).add(2, 'days'),
-      moment(TODAY).add(3, 'days'),
-      moment(TODAY).add(4, 'days'),
-      moment(TODAY).add(5, 'days'),
-      moment(TODAY).add(6, 'days'),
-      moment(TODAY).add(7, 'days')
+      moment(TODAY).utc().startOf('day').add(0, 'days'),
+      moment(TODAY).utc().startOf('day').add(1, 'days'),
+      moment(TODAY).utc().startOf('day').add(2, 'days'),
+      moment(TODAY).utc().startOf('day').add(3, 'days'),
+      moment(TODAY).utc().startOf('day').add(4, 'days'),
+      moment(TODAY).utc().startOf('day').add(5, 'days'),
+      moment(TODAY).utc().startOf('day').add(6, 'days'),
+      moment(TODAY).utc().startOf('day').add(7, 'days')
     ]
   }
 
@@ -67,12 +67,8 @@ export class DatePickerComponent implements OnInit {
     this.allow_next = this.selectedDate.isBefore(this.maxDate);
   }
 
-  previousDate() {
-    this.selectedDateChange.emit(moment(this.selectedDate).subtract(1, 'days'));
-  }
-
-  nextDate() {
-    this.selectedDateChange.emit(moment(this.selectedDate).add(1, 'days'));
+  pickDate(date: moment.Moment) {
+    this.selectedDateChange.emit(moment(date).utc().startOf('day'));
   }
 
 }
