@@ -8,10 +8,10 @@ const TODAY = moment().utc().startOf('day');
   template: `
     <div class="content">
       <div class="box">
-        <div class="card--date" *ngFor="let date of dates" (click)="pickDate(date)">
-          {{date | date:'E':'UTC' }}
-          {{date | date:'LLL':'UTC' }}
-          {{date | date:'dd':'UTC' }}
+        <div class="date" [ngClass]="{ 'date--selected': date.isSame(selectedDate) }" *ngFor="let date of dates" (click)="pickDate(date)">
+          <h6>{{date | date:'LLL':'UTC' }}</h6>
+          <h2>{{date | date:'dd':'UTC' }}</h2>
+          <h6>{{date | date:'E':'UTC' }}</h6>
         </div>
       </div>
     </div>
@@ -21,6 +21,7 @@ const TODAY = moment().utc().startOf('day');
       flex: 1;
       display: flex;
       overflow: auto;
+      padding: 8px;
     }
 
     .box {
@@ -28,8 +29,40 @@ const TODAY = moment().utc().startOf('day');
       min-height: min-content; /* needs vendor prefixes */
     }
 
-    .card--date {
-      width: 100px !important;
+    .date {
+      cursor: pointer;
+      border-radius: 8px;
+      padding: 8px 16px;
+      background: #eee;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      margin-right: 12px;
+    }
+
+    .date--selected {
+      background: #222;
+    }
+
+    .date--selected h2, .date--selected h6 {
+      color: #fff;
+    }
+
+    .date h6 {
+      text-transform: uppercase;
+      font-size: 14px;
+      font-weight: bold;
+    }
+
+    .date h2 {
+      font-size: 28px;
+      font-weight: bold;
+    }
+
+    .date h2, .date h6 {
+      margin: 0;
+      padding: 0;
     }
   `]
 })

@@ -33,7 +33,7 @@ export class ReservationService {
       return reservation;
     } catch (err) {
       this.getReservations();
-      return err;
+      throw err;
     }
   }
 }

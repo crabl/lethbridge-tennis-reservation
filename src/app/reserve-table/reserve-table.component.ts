@@ -155,7 +155,7 @@ export class ReserveTableComponent implements OnInit {
         last_name: 'McKillop',
         email: 'kbm@kbmonline.uni.cc'
       }
-    })).subscribe(xs => console.log(xs));
+    })).then(xs => console.log(xs), (err) => console.error(err));
   }
 
   isAvailable(selected_date, selected_court_index, timeslot) {
