@@ -9,10 +9,6 @@ import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
     <div class="modal-content">
 
       <div class="modal-body">
-        <div class="alert alert-danger" *ngIf="error">
-          {{ error }}
-        </div>
-
         <div class="form-group">
           <label><strong>Timeslot Details</strong></label>
           <button type="button" class="close" aria-label="Close" (click)="dismiss()">
@@ -27,18 +23,22 @@ import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
           </div>
         </div>
 
+        <div class="alert alert-danger" *ngIf="error">
+          {{ error }}
+        </div>
+
         <div class="form-group">
-          <label>First Name</label>
+          <label><strong>First Name</strong></label>
           <input class="form-control" [(ngModel)]="first_name" required />
         </div>
 
         <div class="form-group">
-          <label>Last Name</label>
+          <label><strong>Last Name</strong></label>
           <input class="form-control" [(ngModel)]="last_name" required />
         </div>
 
         <div class="form-group">
-          <label>E-mail Address</label>
+          <label><strong>E-mail Address</strong></label>
           <input class="form-control" [(ngModel)]="email" type="email" required />
         </div>
 
