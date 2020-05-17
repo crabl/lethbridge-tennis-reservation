@@ -21,7 +21,11 @@ const TODAY = moment().utc().startOf('day');
       flex: 1;
       display: flex;
       overflow: auto;
-      padding: 8px;
+      padding: 0px 8px;
+    }
+
+    .content::-webkit-scrollbar {
+      display: none;
     }
 
     .box {
@@ -32,17 +36,19 @@ const TODAY = moment().utc().startOf('day');
     .date {
       cursor: pointer;
       border-radius: 8px;
-      padding: 8px 16px;
-      background: #eee;
+      padding: 8px 20px;
+      background: #fafafa;
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      margin-right: 12px;
+      margin-right: 6px;
+      border: 1px solid #ccc;
     }
 
     .date--selected {
       background: #007bff;
+      border: 1px solid #111188;
     }
 
     .date--selected h2, .date--selected h6 {

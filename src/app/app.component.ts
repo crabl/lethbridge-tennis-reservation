@@ -8,6 +8,8 @@ import { ReservationService } from './reservation.service';
   template: `
     <!--The content below is only a placeholder and can be replaced.-->
     <div class="app-container">
+      <h4 class="w-auto text-center" style="margin: 12px 0px;">Reserve a Tennis Court</h4>
+
       <app-reserve-table [reservations]="reservations$ | async"></app-reserve-table>
     </div>
   `,
@@ -15,7 +17,7 @@ import { ReservationService } from './reservation.service';
     .app-container {
       max-width: 615px;
       width: 100%;
-      margin: 10px auto;
+      margin: 0px auto 10px auto;
     }
   `]
 })

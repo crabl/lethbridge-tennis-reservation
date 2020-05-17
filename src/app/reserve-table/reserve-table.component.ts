@@ -56,26 +56,19 @@ const ALL_TIMESLOTS = [
 @Component({
   selector: 'app-reserve-table',
   template: `
-    <div class="form-group">
-      <label class="form-label">Date</label> {{ selected_date | json }}
-      <app-date-picker [(selectedDate)]="selected_date" (selectedDateChange)="refreshList()"></app-date-picker>
-    </div>
-
-    <div class="form-group">
-      <label class="form-label">Court to reserve</label>
-
-      <div class="btn-group btn-group-toggle" ngbRadioGroup name="radioBasic" [(ngModel)]="selected_court" (ngModelChange)="refreshList()">
-        <label ngbButtonLabel class="btn-outline-primary" *ngFor="let court of courts; let i = index">
-          <input ngbButton type="radio" [value]="i"> {{ court }}
-        </label>
+      <div class="form-group">
+        <app-date-picker [(selectedDate)]="selected_date" (selectedDateChange)="refreshList()"></app-date-picker>
       </div>
-    </div>
+
+      <div class="form-group">
+        <app-court-picker [(selectedCourt)]="selected_court" (selectedCourtChange)="refreshList()" [courts]="courts"></app-court-picker>
+      </div>
 
     <div class="timeslots">
       <ng-container *ngFor="let slot of timeslots">
         <!-- check if already reserved, show as booked -->
-        <div class="timeslot" *ngIf="slot.status === TimeslotStatus.Available">
-          <div class="time">{{ slot.timeslot }}</div> <button class="btn btn-outline-primary" (click)="reserve(selected_date, selected_court, slot)">Request Timeslot</button>
+        <div class="timeslot" *ngIf="slot.status === TimeslotStatus.Available" (click)="reserve(selected_date, selected_court, slot)">
+          <div class="time">{{ slot.timeslot }}</div> <button class="btn btn-secondary">Request</button>
         </div>
 
         <div class="timeslot" disabled  *ngIf="slot.status === TimeslotStatus.Booked">
@@ -89,10 +82,13 @@ const ALL_TIMESLOTS = [
     </div>
   `,
   styles: [`
+    .navbar-brand {
+      text-align: center;
+    }
 
     .timeslots {
-      background: #fff;
-      border: 1px solid #eee;
+      background: #fafafa;
+      border: 1px solid #ccc;
       border-radius: 8px;
       margin: 8px;
     }
@@ -111,14 +107,14 @@ const ALL_TIMESLOTS = [
       min-height: 64px;
       display: flex;
       align-items: center;
-      border-bottom: 1px solid #eee;
+      border-bottom: 1px solid #ddd;
       padding: 12px;
-      background: #fff;
     }
 
     .timeslot .time {
       flex: 1;
       text-align: left;
+      font-weight: 600;
     }
   `]
 })
@@ -128,7 +124,7 @@ export class ReserveTableComponent implements OnInit {
   public TimeslotStatus = TimeslotStatus;
 
   selected_date = moment().utc().startOf('day');
-  selected_court = 0;
+  selected_court = '#1';
 
   courts = ['#1', '#2', '#3', '#4', '#5', '#6'];
 
@@ -143,7 +139,7 @@ export class ReserveTableComponent implements OnInit {
 
   refreshList() {
     const reservations = this.reservations.filter((r: PublicReservation) => {
-      return r.date.isSame(this.selected_date) && r.court === this.courts[this.selected_court];
+      return r.date.isSame(this.selected_date) && r.court === this.selected_court;
     });
 
     this.timeslots = ALL_TIMESLOTS.map((t: string) => {
@@ -171,29 +167,29 @@ export class ReserveTableComponent implements OnInit {
     });
   }
 
-  reserve(selected_date, selected_court_index, slot: Timeslot) {
+  reserve(selected_date, selected_court, slot: Timeslot) {
     const modal_ref = this.NgbModal.open(ReserveModalComponent);
     modal_ref.componentInstance.date = selected_date;
-    modal_ref.componentInstance.court = this.courts[selected_court_index];
+    modal_ref.componentInstance.court = selected_court;
     modal_ref.componentInstance.timeslot = slot.timeslot;
   }
 
-  isAvailable(selected_date, selected_court_index, timeslot) {
-    return !this.isBooked(selected_date, selected_court_index, timeslot);
+  isAvailable(selected_date, selected_court, timeslot) {
+    return !this.isBooked(selected_date, selected_court, timeslot);
   }
 
-  isBooked(selected_date, selected_court_index, timeslot) {
+  isBooked(selected_date, selected_court, timeslot) {
     const [ booked_by ] = this.reservations.filter((r: PublicReservation) => {
       console.log(r.date.isSame(selected_date));
-      return r.date.isSame(selected_date) && r.court === this.courts[selected_court_index] && r.timeslot === timeslot;
+      return r.date.isSame(selected_date) && r.court === selected_court && r.timeslot === timeslot;
     }).map((r: PublicReservation) => r.booked_by);
 
     return booked_by;
   }
 
-  isPending(selected_date, selected_court_index, timeslot) {
+  isPending(selected_date, selected_court, timeslot) {
     const [ reservation ] = this.reservations.filter((r: PublicReservation) => {
-      return r.date.isSame(selected_date) && r.court === this.courts[selected_court_index] && r.timeslot === timeslot;
+      return r.date.isSame(selected_date) && r.court === selected_court && r.timeslot === timeslot;
     });
 
     if (reservation) {

@@ -9,13 +9,15 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { DatePickerComponent } from './date-picker/date-picker.component';
 import { ReservationService } from './reservation.service';
 import { ReserveModalComponent } from './reserve-modal/reserve-modal.component';
+import { CourtPickerComponent } from './court-picker/court-picker.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     ReserveTableComponent,
     DatePickerComponent,
-    ReserveModalComponent
+    ReserveModalComponent,
+    CourtPickerComponent
   ],
   imports: [
     BrowserModule,

@@ -78,6 +78,8 @@ export class ReserveModalComponent implements OnInit {
   }
 
   async reserve() {
+    this.NgbActiveModal.close();
+
     this.ReservationService.createReservation(new PrivateReservation({
       date: this.date,
       court: this.court,

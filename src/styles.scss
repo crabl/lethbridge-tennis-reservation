@@ -4,5 +4,10 @@
 @import '~bootstrap/scss/bootstrap';
 * { box-sizing: border-box; }
 body {
-  background: #fafafa;
+  background: #e5e5e5;
+}
+
+button {
+  outline: none !important;
+  box-shadow: none !important;
 }
