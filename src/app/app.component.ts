@@ -7,9 +7,17 @@ import { ReservationService } from './reservation.service';
   selector: 'app-root',
   template: `
     <!--The content below is only a placeholder and can be replaced.-->
-    <app-reserve-table [reservations]="reservations$ | async"></app-reserve-table>
+    <div class="app-container">
+      <app-reserve-table [reservations]="reservations$ | async"></app-reserve-table>
+    </div>
   `,
-  styles: []
+  styles: [`
+    .app-container {
+      max-width: 615px;
+      width: 100%;
+      margin: 10px auto;
+    }
+  `]
 })
 export class AppComponent {
   title = 'lethbridge-tennis-reservation';

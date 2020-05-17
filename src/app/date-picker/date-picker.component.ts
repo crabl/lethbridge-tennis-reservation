@@ -42,7 +42,7 @@ const TODAY = moment().utc().startOf('day');
     }
 
     .date--selected {
-      background: #222;
+      background: #007bff;
     }
 
     .date--selected h2, .date--selected h6 {

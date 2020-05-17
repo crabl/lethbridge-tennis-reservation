@@ -71,29 +71,56 @@ const ALL_TIMESLOTS = [
       </div>
     </div>
 
-    <table class="table table-sm table-responsive">
-      <tbody>
-        <tr *ngFor="let slot of timeslots">
-          <td>
-            <!-- check if already reserved, show as booked -->
-            <button class="btn btn-outline-primary" (click)="reserve(selected_date, selected_court, slot)" *ngIf="slot.status === TimeslotStatus.Available">
-              {{ slot.timeslot }} - Reserve Timeslot
-            </button>
+    <div class="timeslots">
+      <ng-container *ngFor="let slot of timeslots">
+        <!-- check if already reserved, show as booked -->
+        <div class="timeslot" *ngIf="slot.status === TimeslotStatus.Available">
+          <div class="time">{{ slot.timeslot }}</div> <button class="btn btn-outline-primary" (click)="reserve(selected_date, selected_court, slot)">Request Timeslot</button>
+        </div>
 
-            <button class="btn btn-outline-secondary" disabled  *ngIf="slot.status === TimeslotStatus.Booked">
-              {{ slot.timeslot }} - Reserved for {{ slot.booked_by }}
-            </button>
+        <div class="timeslot" disabled  *ngIf="slot.status === TimeslotStatus.Booked">
+          <div class="time">{{ slot.timeslot }}</div> <span class="badge badge-pill badge-success">Reserved for {{ slot.booked_by }}</span>
+        </div>
 
-            <button class="btn btn-secondary" disabled  *ngIf="slot.status === TimeslotStatus.Pending">
-              {{ slot.timeslot }} - Reservation Pending for {{ slot.booked_by }}
-            </button>
-          </td>
-        </tr>
-      </tbody>
-    </table>
+        <div class="timeslot" disabled  *ngIf="slot.status === TimeslotStatus.Pending">
+          <div class="time">{{ slot.timeslot }}</div> <span class="badge badge-pill badge-warning">Reservation pending for {{ slot.booked_by }}</span>
+        </div>
+      </ng-container>
+    </div>
   `,
-  styles: [
-  ]
+  styles: [`
+
+    .timeslots {
+      background: #fff;
+      border: 1px solid #eee;
+      border-radius: 8px;
+      margin: 8px;
+    }
+
+    .timeslot:first-child {
+      border-top-left-radius: 8px;
+      border-top-right-radius: 8px;
+    }
+
+    .timeslot:last-child {
+      border-bottom-left-radius: 8px;
+      border-bottom-right-radius: 8px;
+    }
+
+    .timeslot {
+      min-height: 64px;
+      display: flex;
+      align-items: center;
+      border-bottom: 1px solid #eee;
+      padding: 12px;
+      background: #fff;
+    }
+
+    .timeslot .time {
+      flex: 1;
+      text-align: left;
+    }
+  `]
 })
 export class ReserveTableComponent implements OnInit {
   @Input() reservations: PublicReservation[] = [];
