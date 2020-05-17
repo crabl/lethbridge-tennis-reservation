@@ -43,7 +43,7 @@ import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
         </div>
 
         <div class="form-group">
-          <p class="text-left">Once your timeslot request is confirmed, you will receive an e-mail. Please note that only registered Lethbridge Tennis Club members can reserve timeslots through this form. <a href="http://www.tennislethbridge.ca/membership.html">To purchase a membership, go here.</a></p>
+          <p class="text-left">Once your timeslot request is confirmed, it will show up in green on the schedule. Please note that only registered Lethbridge Tennis Club members can reserve timeslots through this form. <a href="http://www.tennislethbridge.ca/membership.html">To purchase a membership, go here.</a></p>
         <div>
       </div>
 
