@@ -72,11 +72,11 @@ const ALL_TIMESLOTS = [
         </div>
 
         <div class="timeslot" disabled  *ngIf="slot.status === TimeslotStatus.Booked">
-          <div class="time">{{ slot.timeslot }}</div> <span class="badge badge-pill badge-success">Reserved for {{ slot.booked_by | uppercase }}</span>
+          <div class="time">{{ slot.timeslot }}</div> <span class="badge badge-success">RESERVED - {{ slot.booked_by | uppercase }}.</span>
         </div>
 
         <div class="timeslot" disabled  *ngIf="slot.status === TimeslotStatus.Pending">
-          <div class="time">{{ slot.timeslot }}</div> <span class="badge badge-pill badge-warning">Reservation pending for {{ slot.booked_by | uppercase }}</span>
+          <div class="time">{{ slot.timeslot }}</div> <span class="badge badge-warning">PENDING CONFIRMATION</span>
         </div>
       </ng-container>
     </div>
