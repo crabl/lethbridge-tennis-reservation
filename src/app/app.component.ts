@@ -15,7 +15,7 @@ import { ReservationService } from './reservation.service';
   `,
   styles: [`
     .app-container {
-      max-width: 615px;
+      max-width: 650px;
       width: 100%;
       margin: 0px auto 10px auto;
     }

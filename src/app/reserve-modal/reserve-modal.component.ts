@@ -78,22 +78,25 @@ export class ReserveModalComponent implements OnInit {
   }
 
   async reserve() {
-    this.NgbActiveModal.close();
-
-    this.ReservationService.createReservation(new PrivateReservation({
-      date: this.date,
-      court: this.court,
-      timeslot: this.timeslot,
-      booked_by: {
-        first_name: this.first_name,
-        last_name: this.last_name,
-        email: this.email
-      }
-    })).then(_success => {
-
-    }, error => {
-      this.error = error;
-    });
+    var re = /\S+@\S+\.\S+/;
+    if (!re.test(this.email)) {
+      this.error = 'Please enter a valid e-mail address.'
+    } else {
+      this.ReservationService.createReservation(new PrivateReservation({
+        date: this.date,
+        court: this.court,
+        timeslot: this.timeslot,
+        booked_by: {
+          first_name: this.first_name,
+          last_name: this.last_name,
+          email: this.email
+        }
+      })).then(_success => {
+        this.NgbActiveModal.close();
+      }, error => {
+        this.error = error;
+      });
+    }
   }
 
 }
